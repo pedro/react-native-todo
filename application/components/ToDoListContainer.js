@@ -34,13 +34,14 @@ var ToDoContainer = React.createClass({
     this.setState({items: items})
   },
 
-  updateItem: function(item, index){
+  updateItem: function(formData, index){
     var items = this.state.items;
+    var todo = {txt: formData.txt, complete: formData.complete};
     if (index) {
-      items[index] = item;
+      items[index] = todo;
     }
     else {
-      items.push(item)
+      items.push(todo)
     }
     this.setState({items: items});
     this.props.navigator.pop();
@@ -54,12 +55,18 @@ var ToDoContainer = React.createClass({
     });
   },
 
+  toggleItem: function(item, index) {
+    var items = this.state.items;
+    items[index].complete = !items[index].complete;
+    this.setState({items: items});
+  },
+
   render: function() {
     return (
       <View style={{flex:1}}>
         <ToDoList
           items={this.state.items}
-          onPressItem={this.openItem}
+          onPressItem={this.toggleItem}
           onLongPressItem={this.AlertMenu} />
         <TouchableHighlight
           style={[styles.button, styles.newButton]}
