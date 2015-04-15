@@ -9,7 +9,7 @@ module.exports = {
       AsyncStorage.getItem('todos')
         .then((value) => {
           if (value !== null) {
-            resolve(value);
+            resolve(JSON.parse(value));
           }
           // nothing in the local store, give users a stub
           else {
@@ -23,5 +23,8 @@ module.exports = {
         .catch(reject)
         .done();
     });
+  },
+  saveTodos: function(todos) {
+    return AsyncStorage.setItem('todos', JSON.stringify(todos));
   }
 };

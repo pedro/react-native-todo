@@ -49,8 +49,12 @@ var ToDoContainer = React.createClass({
     else {
       items.push(todo)
     }
-    this.setState({items: items});
-    this.props.navigator.pop();
+    Storage.saveTodos(items)
+      .then(() => {
+        this.setState({items: items});
+        this.props.navigator.pop();
+      })
+      .done();
   },
 
   openItem: function(rowData, rowID) {
