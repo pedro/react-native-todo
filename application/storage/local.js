@@ -11,6 +11,7 @@ module.exports = {
           if (value !== null) {
             resolve(value);
           }
+          // nothing in the local store, give users a stub
           else {
             var todos = [
               {txt: 'Learn react native', complete:false},
