@@ -4,7 +4,10 @@ var React = require('react-native');
 var ToDoList = require('./ToDoList');
 var ToDoEdit = require('./ToDoEdit');
 var { Text, View, ListView, TouchableHighlight, AlertIOS } = React;
-var Storage = require('../storage/local.js');
+
+// pick a storage backend:
+// var Storage = require('../storage/local.js');
+var Storage = require('../storage/remote.js');
 
 var ToDoContainer = React.createClass({
 
@@ -68,7 +71,11 @@ var ToDoContainer = React.createClass({
   toggleItem: function(item, index) {
     var items = this.state.items;
     items[index].complete = !items[index].complete;
-    this.setState({items: items});
+    Storage.saveTodos(items)
+      .then(() => {
+        this.setState({items: items});
+      })
+      .done();
   },
 
   render: function() {
