@@ -2,11 +2,12 @@
 
 var React = require('react-native');
 var { AsyncStorage } = React;
+var STORAGE_KEY = 'todos';
 
 module.exports = {
   getTodos: function() {
     return new Promise((resolve, reject) => {
-      AsyncStorage.getItem('todos')
+      AsyncStorage.getItem(STORAGE_KEY)
         .then((value) => {
           if (value !== null) {
             resolve(JSON.parse(value));
@@ -25,6 +26,6 @@ module.exports = {
     });
   },
   saveTodos: function(todos) {
-    return AsyncStorage.setItem('todos', JSON.stringify(todos));
+    return AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
   }
 };
