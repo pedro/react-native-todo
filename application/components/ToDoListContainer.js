@@ -4,16 +4,22 @@ var React = require('react-native');
 var ToDoList = require('./ToDoList');
 var ToDoEdit = require('./ToDoEdit');
 var { Text, View, ListView, TouchableHighlight, AlertIOS } = React;
+var Storage = require('../storage/local.js');
 
 var ToDoContainer = React.createClass({
 
   getInitialState: function() {
     return {
-      items: [
-        {txt: 'Learn react native', complete:false},
-        {txt: 'Make a to-do app', complete:true}
-      ]
+      items: []
     };
+  },
+
+  componentDidMount: function() {
+    Storage.getTodos()
+      .then((todos) => {
+        this.setState({items: todos});
+      })
+      .done();
   },
 
   AlertMenu: function(rowData, rowID) {
